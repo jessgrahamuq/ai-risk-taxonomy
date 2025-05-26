@@ -4,38 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Risk Domain Taxonomy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
         }
         
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
+            font-weight: 400;
         }
         
         .taxonomy-container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             overflow: hidden;
         }
         
         .taxonomy-header {
-            background: #a12536;
+            background: linear-gradient(135deg, #a12536 0%, #851e2b 100%);
             color: white;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
+            position: relative;
+        }
+        
+        .taxonomy-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
         }
         
         .taxonomy-header h1 {
             margin: 0;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
         }
         
         .table-container {
@@ -45,103 +62,165 @@
         .taxonomy-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 15px;
+            background: white;
         }
         
         .domain-row {
-            background: #a12536;
-            color: white;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .domain-row:hover {
-            background: #851e2b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
         .domain-row td {
-            padding: 15px;
-            font-weight: bold;
-            border-bottom: 2px solid #851e2b;
+            padding: 0;
+            border: none;
             position: relative;
+        }
+        
+        .domain-header {
+            display: flex;
+            align-items: center;
+            padding: 18px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .domain-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--domain-color) 0%, var(--domain-color-dark) 100%);
+            z-index: 1;
+        }
+        
+        .domain-header > * {
+            position: relative;
+            z-index: 2;
         }
         
         .domain-number {
             width: 50px;
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-right: 16px;
+            flex-shrink: 0;
         }
         
         .domain-title {
-            font-size: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            flex: 1;
+            letter-spacing: -0.3px;
         }
         
         .expand-icon {
-            float: right;
-            font-size: 18px;
-            transition: transform 0.3s;
+            margin-left: auto;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+        }
+        
+        .expand-icon::before {
+            content: '▶';
+            display: block;
+            font-weight: 600;
         }
         
         .domain-row.expanded .expand-icon {
             transform: rotate(90deg);
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* Domain-specific colors */
+        .domain-1 { --domain-color: #1f78b4; --domain-color-dark: #1a6ba3; --text-color: white; }
+        .domain-2 { --domain-color: #b2df8a; --domain-color-dark: #9fd474; --text-color: #333; }
+        .domain-3 { --domain-color: #33a02c; --domain-color-dark: #2d8f27; --text-color: white; }
+        .domain-4 { --domain-color: #fb9a99; --domain-color-dark: #fa8589; --text-color: #333; }
+        .domain-5 { --domain-color: #e31a1c; --domain-color-dark: #c71719; --text-color: white; }
+        .domain-6 { --domain-color: #fdbf6f; --domain-color-dark: #fcb04e; --text-color: #333; }
+        .domain-7 { --domain-color: #cab2d6; --domain-color-dark: #bfa3cd; --text-color: #333; }
+        
+        .domain-row .domain-header,
+        .domain-row .domain-number,
+        .domain-row .domain-title,
+        .domain-row .expand-icon {
+            color: var(--text-color);
         }
         
         .subdomain-row {
             display: none;
-            animation: slideDown 0.3s ease-out;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #e9ecef;
         }
         
         .subdomain-row.show {
             display: table-row;
+            animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .subdomain-row:nth-child(even) {
-            background: #f8f9fa;
+        .subdomain-row:nth-of-type(even) {
+            background: #fbfcfd;
         }
         
-        .subdomain-row:nth-child(odd) {
+        .subdomain-row:nth-of-type(odd) {
             background: white;
         }
         
+        .subdomain-row:hover {
+            background: #f0f7ff !important;
+            transform: translateX(4px);
+        }
+        
         .subdomain-row td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f1f3f4;
             vertical-align: top;
+            transition: all 0.2s ease;
         }
         
         .subdomain-number {
-            width: 50px;
+            width: 70px;
             text-align: center;
-            color: #666;
-            font-weight: bold;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 14px;
         }
         
         .subdomain-title {
             font-weight: 600;
-            color: #333;
-            min-width: 200px;
+            color: #2c3e50;
+            min-width: 280px;
+            font-size: 15px;
+            line-height: 1.4;
+            padding-right: 20px;
         }
         
         .subdomain-description {
-            color: #555;
-            line-height: 1.5;
+            color: #5a6c7d;
+            line-height: 1.6;
+            font-size: 14px;
+            font-weight: 400;
         }
-        
-        /* Color coding for domains */
-        .domain-1 { background: #1f78b4; }
-        .domain-1:hover { background: #1a6ba3; }
-        .domain-2 { background: #b2df8a; color: #000; }
-        .domain-2:hover { background: #9fd474; }
-        .domain-3 { background: #33a02c; }
-        .domain-3:hover { background: #2d8f27; }
-        .domain-4 { background: #fb9a99; color: #000; }
-        .domain-4:hover { background: #fa8589; }
-        .domain-5 { background: #e31a1c; }
-        .domain-5:hover { background: #c71719; }
-        .domain-6 { background: #fdbf6f; color: #000; }
-        .domain-6:hover { background: #fcb04e; }
-        .domain-7 { background: #cab2d6; color: #000; }
-        .domain-7:hover { background: #bfa3cd; }
         
         @keyframes slideDown {
             from {
@@ -161,9 +240,58 @@
             }
             
             .taxonomy-header {
-                padding: 15px;
+                padding: 20px 15px;
             }
             
+            .taxonomy-header h1 {
+                font-size: 22px;
+            }
+            
+            .taxonomy-table {
+                font-size: 13px;
+            }
+            
+            .domain-header {
+                padding: 15px 16px;
+            }
+            
+            .domain-number {
+                width: 40px;
+                font-size: 16px;
+                margin-right: 12px;
+            }
+            
+            .domain-title {
+                font-size: 15px;
+            }
+            
+            .expand-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+            
+            .subdomain-row td {
+                padding: 12px 16px;
+            }
+            
+            .subdomain-number {
+                width: 50px;
+                font-size: 12px;
+            }
+            
+            .subdomain-title {
+                font-size: 14px;
+                min-width: 200px;
+                padding-right: 12px;
+            }
+            
+            .subdomain-description {
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .taxonomy-header h1 {
                 font-size: 20px;
             }
@@ -172,27 +300,38 @@
                 font-size: 12px;
             }
             
-            .domain-row td {
-                padding: 12px 10px;
+            .domain-header {
+                padding: 12px 12px;
             }
             
-            .subdomain-row td {
-                padding: 10px;
-            }
-            
-            .domain-number,
-            .subdomain-number {
-                width: 40px;
-                font-size: 12px;
+            .domain-number {
+                width: 35px;
+                font-size: 14px;
+                margin-right: 8px;
             }
             
             .domain-title {
                 font-size: 14px;
             }
             
+            .expand-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+            }
+            
+            .subdomain-row td {
+                padding: 10px 12px;
+            }
+            
+            .subdomain-number {
+                width: 45px;
+            }
+            
             .subdomain-title {
-                font-size: 13px;
                 min-width: 150px;
+                font-size: 13px;
+                padding-right: 8px;
             }
             
             .subdomain-description {
@@ -200,19 +339,15 @@
             }
         }
         
-        @media (max-width: 480px) {
-            .taxonomy-table {
-                font-size: 11px;
-            }
-            
-            .domain-row td,
-            .subdomain-row td {
-                padding: 8px 5px;
-            }
-            
-            .subdomain-title {
-                min-width: 120px;
-            }
+        /* Focus styles for accessibility */
+        .domain-row:focus-within {
+            outline: 2px solid #4A90E2;
+            outline-offset: 2px;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -226,11 +361,13 @@
             <table class="taxonomy-table">
                 <tbody>
                     <!-- Domain 1: Discrimination & toxicity -->
-                    <tr class="domain-row domain-1" onclick="toggleDomain(1)">
-                        <td class="domain-number">1</td>
-                        <td class="domain-title">
-                            Discrimination & toxicity
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-1" onclick="toggleDomain(1)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">1</div>
+                                <div class="domain-title">Discrimination & toxicity</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-1-sub">
@@ -250,11 +387,13 @@
                     </tr>
                     
                     <!-- Domain 2: Privacy & security -->
-                    <tr class="domain-row domain-2" onclick="toggleDomain(2)">
-                        <td class="domain-number">2</td>
-                        <td class="domain-title">
-                            Privacy & security
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-2" onclick="toggleDomain(2)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">2</div>
+                                <div class="domain-title">Privacy & security</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-2-sub">
@@ -269,11 +408,13 @@
                     </tr>
                     
                     <!-- Domain 3: Misinformation -->
-                    <tr class="domain-row domain-3" onclick="toggleDomain(3)">
-                        <td class="domain-number">3</td>
-                        <td class="domain-title">
-                            Misinformation
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-3" onclick="toggleDomain(3)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">3</div>
+                                <div class="domain-title">Misinformation</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-3-sub">
@@ -288,11 +429,13 @@
                     </tr>
                     
                     <!-- Domain 4: Malicious actors & misuse -->
-                    <tr class="domain-row domain-4" onclick="toggleDomain(4)">
-                        <td class="domain-number">4</td>
-                        <td class="domain-title">
-                            Malicious actors & misuse
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-4" onclick="toggleDomain(4)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">4</div>
+                                <div class="domain-title">Malicious actors & misuse</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-4-sub">
@@ -312,11 +455,13 @@
                     </tr>
                     
                     <!-- Domain 5: Human-computer interaction -->
-                    <tr class="domain-row domain-5" onclick="toggleDomain(5)">
-                        <td class="domain-number">5</td>
-                        <td class="domain-title">
-                            Human-computer interaction
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-5" onclick="toggleDomain(5)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">5</div>
+                                <div class="domain-title">Human-computer interaction</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-5-sub">
@@ -331,11 +476,13 @@
                     </tr>
                     
                     <!-- Domain 6: Socioeconomic & environmental harms -->
-                    <tr class="domain-row domain-6" onclick="toggleDomain(6)">
-                        <td class="domain-number">6</td>
-                        <td class="domain-title">
-                            Socioeconomic & environmental harms
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-6" onclick="toggleDomain(6)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">6</div>
+                                <div class="domain-title">Socioeconomic & environmental harms</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-6-sub">
@@ -370,11 +517,13 @@
                     </tr>
                     
                     <!-- Domain 7: AI system safety, failures & limitations -->
-                    <tr class="domain-row domain-7" onclick="toggleDomain(7)">
-                        <td class="domain-number">7</td>
-                        <td class="domain-title">
-                            AI system safety, failures & limitations
-                            <span class="expand-icon">▶</span>
+                    <tr class="domain-row domain-7" onclick="toggleDomain(7)" tabindex="0" role="button" aria-expanded="false">
+                        <td colspan="3">
+                            <div class="domain-header">
+                                <div class="domain-number">7</div>
+                                <div class="domain-title">AI system safety, failures & limitations</div>
+                                <div class="expand-icon" aria-hidden="true"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="subdomain-row domain-7-sub">
@@ -423,32 +572,45 @@
             if (isExpanded) {
                 // Collapse
                 domainRow.classList.remove('expanded');
-                subdomainRows.forEach(row => {
-                    row.classList.remove('show');
+                domainRow.setAttribute('aria-expanded', 'false');
+                subdomainRows.forEach((row, index) => {
                     setTimeout(() => {
-                        row.style.display = 'none';
-                    }, 300);
+                        row.classList.remove('show');
+                        setTimeout(() => {
+                            if (!row.classList.contains('show')) {
+                                row.style.display = 'none';
+                            }
+                        }, 300);
+                    }, index * 30);
                 });
             } else {
                 // Expand
                 domainRow.classList.add('expanded');
+                domainRow.setAttribute('aria-expanded', 'true');
                 subdomainRows.forEach((row, index) => {
                     setTimeout(() => {
                         row.style.display = 'table-row';
-                        row.classList.add('show');
+                        requestAnimationFrame(() => {
+                            row.classList.add('show');
+                        });
                     }, index * 50);
                 });
             }
         }
         
-        // Optional: Allow keyboard navigation
+        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && e.target.closest('.domain-row')) {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.domain-row')) {
+                e.preventDefault();
                 const domainRow = e.target.closest('.domain-row');
-                const domainNumber = Array.from(domainRow.classList).find(c => c.startsWith('domain-')).split('-')[1];
-                toggleDomain(parseInt(domainNumber));
+                const domainClass = Array.from(domainRow.classList).find(c => c.startsWith('domain-') && !c.includes('-sub'));
+                const domainNumber = parseInt(domainClass.split('-')[1]);
+                toggleDomain(domainNumber);
             }
         });
+        
+        // Touch improvements for mobile
+        document.addEventListener('touchstart', function() {}, {passive: true});
     </script>
 </body>
 </html>
