@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Risk Domain Taxonomy - Compact</title>
+    <title>AI Risk Domain Taxonomy</title>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -13,66 +13,62 @@
         body {
             font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 15px;
+            padding: 20px;
             background-color: #f8f9fa;
             font-weight: 400;
-            line-height: 1.3;
+            line-height: 1.4;
         }
         
         .taxonomy-container {
             max-width: 1600px;
             margin: 0 auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
             overflow: hidden;
         }
         
         .taxonomy-header {
             background: linear-gradient(135deg, #a12536 0%, #851e2b 100%);
             color: white;
-            padding: 25px 20px;
+            padding: 40px 30px;
             text-align: center;
         }
         
         .taxonomy-header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
         
         .table-container {
-            padding: 20px;
+            padding: 30px;
             background: white;
+            overflow-x: auto;
         }
         
-        /* Compact Grid Layout */
-        .taxonomy-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            align-items: start;
+        /* Horizontal Table Layout */
+        .taxonomy-table {
+            width: 100%;
+            min-width: 1200px;
+            border-collapse: separate;
+            border-spacing: 16px;
         }
         
-        .left-column {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .domain-column {
+            width: calc(50% - 8px);
+            vertical-align: top;
         }
         
         .domain-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             border: 2px solid var(--domain-color);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+            break-inside: avoid;
         }
         
         /* Domain-specific colors */
@@ -87,44 +83,40 @@
         .domain-header {
             background: linear-gradient(135deg, var(--domain-color) 0%, var(--domain-color-dark) 100%);
             color: var(--text-color);
-            padding: 12px 16px;
+            padding: 16px 20px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
         .domain-number {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 700;
             flex-shrink: 0;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.3);
         }
         
         .domain-title {
             flex: 1;
-            font-size: 13px;
         }
         
         .subdomain-list {
             background: #fafbfc;
-            padding: 0;
         }
         
         .subdomain-item {
-            padding: 8px 12px;
+            padding: 16px 20px;
             border-bottom: 1px solid rgba(0,0,0,0.06);
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
+            transition: all 0.2s ease;
         }
         
         .subdomain-item:last-child {
@@ -133,182 +125,196 @@
         
         .subdomain-item:hover {
             background: #f0f7ff;
+            box-shadow: inset 4px 0 0 var(--domain-color);
+        }
+        
+        .subdomain-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 8px;
         }
         
         .subdomain-number {
             background: linear-gradient(135deg, var(--domain-color), var(--domain-color-dark));
             color: white;
-            width: 20px;
-            height: 20px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
+            font-size: 11px;
             font-weight: 700;
             flex-shrink: 0;
-            margin-top: 1px;
-        }
-        
-        .subdomain-content {
-            flex: 1;
-            min-width: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            margin-top: 2px;
         }
         
         .subdomain-title {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             color: #2c3e50;
             line-height: 1.3;
-            margin-bottom: 3px;
+            flex: 1;
         }
         
         .subdomain-description {
             color: #5a6c7d;
-            font-size: 10px;
+            font-size: 13px;
             line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        /* Hover to show full description */
-        .subdomain-item:hover .subdomain-description {
-            -webkit-line-clamp: unset;
-            overflow: visible;
-            display: block;
+            margin-left: 40px;
         }
         
         /* Mobile Layout */
         @media (max-width: 1200px) {
-            .taxonomy-grid {
-                gap: 12px;
+            .table-container {
+                padding: 20px;
+            }
+            
+            .taxonomy-table {
+                min-width: 800px;
             }
         }
         
         @media (max-width: 900px) {
             body {
-                padding: 10px;
+                padding: 15px;
             }
             
             .taxonomy-header {
-                padding: 20px 15px;
+                padding: 30px 20px;
             }
             
             .taxonomy-header h1 {
-                font-size: 20px;
+                font-size: 26px;
             }
             
             .table-container {
                 padding: 15px;
             }
             
-            .taxonomy-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
+            .taxonomy-table {
+                display: block;
+                min-width: auto;
             }
             
-            .left-column,
-            .right-column {
-                gap: 10px;
+            .taxonomy-table tr {
+                display: block;
+            }
+            
+            .domain-column {
+                display: block;
+                width: 100%;
+                vertical-align: top;
+            }
+            
+            .domain-card {
+                margin-bottom: 12px;
             }
             
             .domain-header {
-                padding: 10px 12px;
-                font-size: 13px;
+                padding: 14px 16px;
+                font-size: 15px;
             }
             
             .domain-number {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
-            }
-            
-            .domain-title {
-                font-size: 12px;
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
             }
             
             .subdomain-item {
-                padding: 6px 10px;
-                gap: 6px;
+                padding: 14px 16px;
             }
             
             .subdomain-number {
-                width: 18px;
-                height: 18px;
-                font-size: 8px;
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
             }
             
             .subdomain-title {
-                font-size: 11px;
+                font-size: 13px;
             }
             
             .subdomain-description {
-                font-size: 9px;
+                font-size: 12px;
+                margin-left: 36px;
             }
         }
         
         @media (max-width: 480px) {
             body {
-                padding: 8px;
-            }
-            
-            .taxonomy-header {
-                padding: 15px 10px;
-            }
-            
-            .taxonomy-header h1 {
-                font-size: 18px;
-            }
-            
-            .table-container {
                 padding: 10px;
             }
             
-            .taxonomy-grid {
-                gap: 8px;
+            .taxonomy-header {
+                padding: 25px 15px;
+            }
+            
+            .taxonomy-header h1 {
+                font-size: 22px;
+            }
+            
+            .table-container {
+                padding: 12px;
+            }
+            
+            .taxonomy-table {
+                min-width: 500px;
+                border-spacing: 8px;
+            }
+            
+            .domain-card {
+                margin-bottom: 8px;
             }
             
             .domain-header {
-                padding: 8px 10px;
-                font-size: 12px;
+                padding: 12px 14px;
+                font-size: 14px;
             }
             
             .domain-number {
-                width: 18px;
-                height: 18px;
-                font-size: 9px;
-            }
-            
-            .domain-title {
-                font-size: 11px;
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
             }
             
             .subdomain-item {
-                padding: 5px 8px;
-                gap: 5px;
+                padding: 12px 14px;
+            }
+            
+            .subdomain-header {
+                gap: 10px;
             }
             
             .subdomain-number {
-                width: 16px;
-                height: 16px;
-                font-size: 7px;
+                width: 20px;
+                height: 20px;
+                font-size: 9px;
             }
             
             .subdomain-title {
-                font-size: 10px;
+                font-size: 12px;
             }
             
             .subdomain-description {
-                font-size: 8px;
-                -webkit-line-clamp: 2;
+                font-size: 11px;
+                line-height: 1.4;
+                margin-left: 30px;
             }
         }
         
         /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
+        }
+        
+        /* Focus styles for accessibility */
+        .subdomain-item:focus-within {
+            outline: 2px solid #4A90E2;
+            outline-offset: 2px;
         }
     </style>
 </head>
@@ -319,251 +325,253 @@
         </div>
         
         <div class="table-container">
-            <div class="taxonomy-grid">
-                <!-- Left Column: Domains 1-5 -->
-                <div class="left-column">
-                    <!-- Domain 1: Discrimination & toxicity -->
-                    <div class="domain-card domain-1">
-                        <div class="domain-header">
-                            <div class="domain-number">1</div>
-                            <div class="domain-title">Discrimination & toxicity</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">1.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Unfair discrimination and misrepresentation</div>
+            <table class="taxonomy-table">
+                <tr>
+                    <!-- Left Column: Domains 1-5 -->
+                    <td class="domain-column">
+                        <!-- Domain 1: Discrimination & toxicity -->
+                        <div class="domain-card domain-1">
+                            <div class="domain-header">
+                                <div class="domain-number">1</div>
+                                <div class="domain-title">Discrimination & toxicity</div>
+                            </div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">1.1</div>
+                                        <div class="subdomain-title">Unfair discrimination and misrepresentation</div>
+                                    </div>
                                     <div class="subdomain-description">Unequal treatment of individuals or groups by AI, often based on race, gender, or other sensitive characteristics, resulting in unfair outcomes and unfair representation of those groups.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">1.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Exposure to toxic content</div>
-                                    <div class="subdomain-description">AI that exposes users to harmful, abusive, unsafe or inappropriate content. May involve providing advice or encouraging action. Examples include hate speech, violence, extremism, illegal acts, or child sexual abuse material.</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">1.2</div>
+                                        <div class="subdomain-title">Exposure to toxic content</div>
+                                    </div>
+                                    <div class="subdomain-description">AI that exposes users to harmful, abusive, unsafe or inappropriate content. May involve providing advice or encouraging action. Examples of toxic content include hate speech, violence, extremism, illegal acts, or child sexual abuse material, as well as content that violates community norms such as profanity, inflammatory political speech, or pornography.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">1.3</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Unequal performance across groups</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">1.3</div>
+                                        <div class="subdomain-title">Unequal performance across groups</div>
+                                    </div>
                                     <div class="subdomain-description">Accuracy and effectiveness of AI decisions and actions is dependent on group membership, where decisions in AI system design and biased training data lead to unequal outcomes, reduced benefits, increased effort, and alienation of users.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Domain 2: Privacy & security -->
-                    <div class="domain-card domain-2">
-                        <div class="domain-header">
-                            <div class="domain-number">2</div>
-                            <div class="domain-title">Privacy & security</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">2.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Compromise of privacy by obtaining, leaking, or correctly inferring sensitive information</div>
+                        
+                        <!-- Domain 2: Privacy & security -->
+                        <div class="domain-card domain-2">
+                            <div class="domain-header">
+                                <div class="domain-number">2</div>
+                                <div class="domain-title">Privacy & security</div>
+                            </div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">2.1</div>
+                                        <div class="subdomain-title">Compromise of privacy by obtaining, leaking, or correctly inferring sensitive information</div>
+                                    </div>
                                     <div class="subdomain-description">AI systems that memorize and leak sensitive personal data or infer private information about individuals without their consent. Unexpected or unauthorized sharing of data and information can compromise user expectation of privacy, assist identity theft, or cause loss of confidential intellectual property.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">2.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">AI system security vulnerabilities and attacks</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">2.2</div>
+                                        <div class="subdomain-title">AI system security vulnerabilities and attacks</div>
+                                    </div>
                                     <div class="subdomain-description">Vulnerabilities that can be exploited in AI systems, software development toolchains, and hardware, resulting in unauthorized access, data and privacy breaches, or system manipulation causing unsafe outputs or behavior.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Domain 3: Misinformation -->
-                    <div class="domain-card domain-3">
-                        <div class="domain-header">
-                            <div class="domain-number">3</div>
-                            <div class="domain-title">Misinformation</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">3.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">False or misleading information</div>
-                                    <div class="subdomain-description">AI systems that inadvertently generate or spread incorrect or deceptive information, which can lead to inaccurate beliefs in users and undermine their autonomy. Humans that make decisions based on false beliefs can experience physical, emotional, or material harms.</div>
-                                </div>
+                        
+                        <!-- Domain 3: Misinformation -->
+                        <div class="domain-card domain-3">
+                            <div class="domain-header">
+                                <div class="domain-number">3</div>
+                                <div class="domain-title">Misinformation</div>
                             </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">3.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Pollution of information ecosystem and loss of consensus reality</div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">3.1</div>
+                                        <div class="subdomain-title">False or misleading information</div>
+                                    </div>
+                                    <div class="subdomain-description">AI systems that inadvertently generate or spread incorrect or deceptive information, which can lead to inaccurate beliefs in users and undermine their autonomy. Humans that make decisions based on false beliefs can experience physical, emotional, or material harms</div>
+                                </div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">3.2</div>
+                                        <div class="subdomain-title">Pollution of information ecosystem and loss of consensus reality</div>
+                                    </div>
                                     <div class="subdomain-description">Highly personalized AI-generated misinformation that creates "filter bubbles" where individuals only see what matches their existing beliefs, undermining shared reality and weakening social cohesion and political processes.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Domain 4: Malicious actors & misuse -->
-                    <div class="domain-card domain-4">
-                        <div class="domain-header">
-                            <div class="domain-number">4</div>
-                            <div class="domain-title">Malicious actors & misuse</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">4.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Disinformation, surveillance, and influence at scale</div>
+                        
+                        <!-- Domain 4: Malicious actors & misuse -->
+                        <div class="domain-card domain-4">
+                            <div class="domain-header">
+                                <div class="domain-number">4</div>
+                                <div class="domain-title">Malicious actors & misuse</div>
+                            </div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">4.1</div>
+                                        <div class="subdomain-title">Disinformation, surveillance, and influence at scale</div>
+                                    </div>
                                     <div class="subdomain-description">Using AI systems to conduct large-scale disinformation campaigns, malicious surveillance, or targeted and sophisticated automated censorship and propaganda, with the aim of manipulating political processes, public opinion, and behavior.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">4.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Cyberattacks, weapon development or use, and mass harm</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">4.2</div>
+                                        <div class="subdomain-title">Cyberattacks, weapon development or use, and mass harm</div>
+                                    </div>
                                     <div class="subdomain-description">Using AI systems to develop cyber weapons (e.g., by coding cheaper, more effective malware), develop new or enhance existing weapons (e.g., Lethal Autonomous Weapons or chemical, biological, radiological, nuclear, and high-yield explosives), or use weapons to cause mass harm.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">4.3</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Fraud, scams, and targeted manipulation</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">4.3</div>
+                                        <div class="subdomain-title">Fraud, scams, and targeted manipulation</div>
+                                    </div>
                                     <div class="subdomain-description">Using AI systems to gain a personal advantage over others such as through cheating, fraud, scams, blackmail, or targeted manipulation of beliefs or behavior. Examples include AI-facilitated plagiarism for research or education, impersonating a trusted or fake individual for illegitimate financial benefit, or creating humiliating or sexual imagery.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Domain 5: Human-computer interaction -->
-                    <div class="domain-card domain-5">
-                        <div class="domain-header">
-                            <div class="domain-number">5</div>
-                            <div class="domain-title">Human-computer interaction</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">5.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Overreliance and unsafe use</div>
-                                    <div class="subdomain-description">Anthropomorphizing, trusting, or relying on AI systems by users, leading to emotional or material dependence and to inappropriate relationships with or expectations of AI systems. Trust can be exploited by malicious actors or result in harm from inappropriate use of AI in critical situations.</div>
-                                </div>
+                        
+                        <!-- Domain 5: Human-computer interaction -->
+                        <div class="domain-card domain-5">
+                            <div class="domain-header">
+                                <div class="domain-number">5</div>
+                                <div class="domain-title">Human-computer interaction</div>
                             </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">5.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Loss of human agency and autonomy</div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">5.1</div>
+                                        <div class="subdomain-title">Overreliance and unsafe use</div>
+                                    </div>
+                                    <div class="subdomain-description">Anthropomorphizing, trusting, or relying on AI systems by users, leading to emotional or material dependence and to inappropriate relationships with or expectations of AI systems. Trust can be exploited by malicious actors (e.g., to harvest information or enable manipulation), or result in harm from inappropriate use of AI in critical situations (such as a medical emergency). Over reliance on AI systems can compromise autonomy and weaken social ties.</div>
+                                </div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">5.2</div>
+                                        <div class="subdomain-title">Loss of human agency and autonomy</div>
+                                    </div>
                                     <div class="subdomain-description">Delegating by humans of key decisions to AI systems, or AI systems that make decisions that diminish human control and autonomy, potentially leading to humans feeling disempowered, losing the ability to shape a fulfilling life trajectory, or becoming cognitively enfeebled.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Right Column: Domains 6-7 -->
-                <div class="right-column">
-                    <!-- Domain 6: Socioeconomic & environmental harms -->
-                    <div class="domain-card domain-6">
-                        <div class="domain-header">
-                            <div class="domain-number">6</div>
-                            <div class="domain-title">Socioeconomic & environmental harms</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">6.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Power centralization and unfair distribution of benefits</div>
+                    </td>
+                    
+                    <!-- Right Column: Domains 6-7 -->
+                    <td class="domain-column">
+                        <!-- Domain 6: Socioeconomic & environmental harms -->
+                        <div class="domain-card domain-6">
+                            <div class="domain-header">
+                                <div class="domain-number">6</div>
+                                <div class="domain-title">Socioeconomic & environmental harms</div>
+                            </div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">6.1</div>
+                                        <div class="subdomain-title">Power centralization and unfair distribution of benefits</div>
+                                    </div>
                                     <div class="subdomain-description">AI-driven concentration of power and resources within certain entities or groups, especially those with access to or ownership of powerful AI systems, leading to inequitable distribution of benefits and increased societal inequality.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">6.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Increased inequality and decline in employment quality</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">6.2</div>
+                                        <div class="subdomain-title">Increased inequality and decline in employment quality</div>
+                                    </div>
                                     <div class="subdomain-description">Social and economic inequalities caused by widespread use of AI, such as by automating jobs, reducing the quality of employment, or producing exploitative dependencies between workers and their employers.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">6.3</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Economic and cultural devaluation of human effort</div>
-                                    <div class="subdomain-description">AI systems capable of creating economic or cultural value, including through reproduction of human innovation or creativity (e.g., art, music, writing, coding, invention), destabilizing economic and social systems that rely on human effort.</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">6.3</div>
+                                        <div class="subdomain-title">Economic and cultural devaluation of human effort</div>
+                                    </div>
+                                    <div class="subdomain-description">AI systems capable of creating economic or cultural value, including through reproduction of human innovation or creativity (e.g., art, music, writing, coding, invention), destabilizing economic and social systems that rely on human effort. The ubiquity of AI-generated content may lead to reduced appreciation for human skills, disruption of creative and knowledge-based industries, and homogenization of cultural experiences.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">6.4</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Competitive dynamics</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">6.4</div>
+                                        <div class="subdomain-title">Competitive dynamics</div>
+                                    </div>
                                     <div class="subdomain-description">Competition by AI developers or state-like actors in an AI "race" by rapidly developing, deploying, and applying AI systems to maximize strategic or economic advantage, increasing the risk they release unsafe and error-prone systems.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">6.5</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Governance failure</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">6.5</div>
+                                        <div class="subdomain-title">Governance failure</div>
+                                    </div>
                                     <div class="subdomain-description">Inadequate regulatory frameworks and oversight mechanisms that fail to keep pace with AI development, leading to ineffective governance and the inability to manage AI risks appropriately.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">6.6</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Environmental harm</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">6.6</div>
+                                        <div class="subdomain-title">Environmental harm</div>
+                                    </div>
                                     <div class="subdomain-description">The development and operation of AI systems that cause environmental harm, such as through energy consumption of data centers or the materials and carbon footprints associated with AI hardware.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Domain 7: AI system safety, failures & limitations -->
-                    <div class="domain-card domain-7">
-                        <div class="domain-header">
-                            <div class="domain-number">7</div>
-                            <div class="domain-title">AI system safety, failures & limitations</div>
-                        </div>
-                        <div class="subdomain-list">
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">7.1</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">AI pursuing its own goals in conflict with human goals or values</div>
-                                    <div class="subdomain-description">AI systems that act in conflict with ethical standards or human goals or values, especially the goals of designers or users. These misaligned behaviors may be introduced by humans during design and development, such as through reward hacking and goal misgeneralisation.</div>
-                                </div>
+                        
+                        <!-- Domain 7: AI system safety, failures & limitations -->
+                        <div class="domain-card domain-7">
+                            <div class="domain-header">
+                                <div class="domain-number">7</div>
+                                <div class="domain-title">AI system safety, failures & limitations</div>
                             </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">7.2</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">AI possessing dangerous capabilities</div>
-                                    <div class="subdomain-description">AI systems that develop, access, or are provided with capabilities that increase their potential to cause mass harm through deception, weapons development and acquisition, persuasion and manipulation, political strategy, cyber-offense, AI development, situational awareness, and self-proliferation.</div>
+                            <div class="subdomain-list">
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">7.1</div>
+                                        <div class="subdomain-title">AI pursuing its own goals in conflict with human goals or values</div>
+                                    </div>
+                                    <div class="subdomain-description">AI systems that act in conflict with ethical standards or human goals or values, especially the goals of designers or users. These misaligned behaviors may be introduced by humans during design and development, such as through reward hacking and goal misgeneralisation, and may result in AI using dangerous capabilities such as manipulation, deception, or situational awareness to seek power, self-proliferate, or achieve other goals.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">7.3</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Lack of capability or robustness</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">7.2</div>
+                                        <div class="subdomain-title">AI possessing dangerous capabilities</div>
+                                    </div>
+                                    <div class="subdomain-description">AI systems that develop, access, or are provided with capabilities that increase their potential to cause mass harm through deception, weapons development and acquisition, persuasion and manipulation, political strategy, cyber-offense, AI development, situational awareness, and self-proliferation. These capabilities may cause mass harm due to malicious human actors, misaligned AI systems, or failure in the AI system.</div>
+                                </div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">7.3</div>
+                                        <div class="subdomain-title">Lack of capability or robustness</div>
+                                    </div>
                                     <div class="subdomain-description">AI systems that fail to perform reliably or effectively under varying conditions, exposing them to errors and failures that can have significant consequences, especially in critical applications or areas that require moral reasoning.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">7.4</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Lack of transparency or interpretability</div>
-                                    <div class="subdomain-description">Challenges in understanding or explaining the decision-making processes of AI systems, which can lead to mistrust, difficulty in enforcing compliance standards or holding relevant actors accountable for harms, and the inability to identify and correct errors.</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">7.4</div>
+                                        <div class="subdomain-title">Lack of transparency or interpretability</div>
+                                    </div>
+                                    <div class="subdomain-description">Challenges in understanding or explaining the decision-making processes of AI systems, which can lead to mistrust, difficulty in enforcing compliance standards or holding relevant actors accountable for harms, and the inability in identify and correct errors.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">7.5</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">AI welfare and rights</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">7.5</div>
+                                        <div class="subdomain-title">AI welfare and rights</div>
+                                    </div>
                                     <div class="subdomain-description">Ethical considerations regarding the treatment of potentially sentient AI entities, including discussions around their potential rights and welfare, particularly as AI systems become more advanced and autonomous.</div>
                                 </div>
-                            </div>
-                            <div class="subdomain-item">
-                                <div class="subdomain-number">7.6</div>
-                                <div class="subdomain-content">
-                                    <div class="subdomain-title">Multi-agent risks</div>
+                                <div class="subdomain-item">
+                                    <div class="subdomain-header">
+                                        <div class="subdomain-number">7.6</div>
+                                        <div class="subdomain-title">Multi-agent risks</div>
+                                    </div>
                                     <div class="subdomain-description">Risks from multi-agent interactions due to incentives (which can lead to conflict or collusion) and/or the structure of multi-agent systems, which can create cascading failures, selection pressures, new security vulnerabilities, and a lack of shared information and trust.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>
