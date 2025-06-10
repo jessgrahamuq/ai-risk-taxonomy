@@ -167,7 +167,7 @@
         }
         
         /* Mobile Layout */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .table-container {
                 padding: 20px;
             }
@@ -177,7 +177,7 @@
             }
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             body {
                 padding: 15px;
             }
@@ -195,8 +195,18 @@
             }
             
             .taxonomy-table {
-                min-width: 600px;
-                border-spacing: 12px;
+                display: block;
+                min-width: auto;
+            }
+            
+            .taxonomy-table tr {
+                display: block;
+            }
+            
+            .domain-column {
+                display: block;
+                width: 100%;
+                vertical-align: top;
             }
             
             .domain-card {
