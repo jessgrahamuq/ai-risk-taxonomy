@@ -13,17 +13,17 @@
         body {
             font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-color: #f8f9fa;
             font-weight: 400;
-            line-height: 1.4;
+            line-height: 1.3;
         }
         
         .taxonomy-container {
             max-width: 1600px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
+            border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.12);
             overflow: hidden;
         }
@@ -31,19 +31,19 @@
         .taxonomy-header {
             background: linear-gradient(135deg, #a12536 0%, #851e2b 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 20px 30px;
             text-align: center;
         }
         
         .taxonomy-header h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
             letter-spacing: -1px;
         }
         
         .table-container {
-            padding: 30px;
+            padding: 15px;
             background: white;
             overflow-x: auto;
         }
@@ -53,21 +53,21 @@
             width: 100%;
             min-width: 1200px;
             border-collapse: separate;
-            border-spacing: 16px;
+            border-spacing: 8px;
         }
         
         .domain-column {
-            width: calc(50% - 8px);
+            width: calc(50% - 4px);
             vertical-align: top;
         }
         
         .domain-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             border: 2px solid var(--domain-color);
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             break-inside: avoid;
         }
         
@@ -83,23 +83,23 @@
         .domain-header {
             background: linear-gradient(135deg, var(--domain-color) 0%, var(--domain-color-dark) 100%);
             color: var(--text-color);
-            padding: 16px 20px;
+            padding: 10px 15px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .domain-number {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 700;
             flex-shrink: 0;
             border: 2px solid rgba(255,255,255,0.3);
@@ -114,7 +114,7 @@
         }
         
         .subdomain-item {
-            padding: 16px 20px;
+            padding: 10px 15px;
             border-bottom: 1px solid rgba(0,0,0,0.06);
             transition: all 0.2s ease;
         }
@@ -131,45 +131,45 @@
         .subdomain-header {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 6px;
         }
         
         .subdomain-number {
             background: linear-gradient(135deg, var(--domain-color), var(--domain-color-dark));
             color: white;
-            width: 28px;
-            height: 28px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 700;
             flex-shrink: 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            margin-top: 2px;
+            margin-top: 1px;
         }
         
         .subdomain-title {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             color: #2c3e50;
-            line-height: 1.3;
+            line-height: 1.2;
             flex: 1;
         }
         
         .subdomain-description {
             color: #5a6c7d;
-            font-size: 13px;
-            line-height: 1.4;
-            margin-left: 40px;
+            font-size: 11px;
+            line-height: 1.3;
+            margin-left: 30px;
         }
         
         /* Mobile Layout */
         @media (max-width: 1200px) {
             .table-container {
-                padding: 20px;
+                padding: 15px;
             }
             
             .taxonomy-table {
@@ -179,19 +179,19 @@
         
         @media (max-width: 900px) {
             body {
-                padding: 15px;
+                padding: 10px;
             }
             
             .taxonomy-header {
-                padding: 30px 20px;
+                padding: 20px 15px;
             }
             
             .taxonomy-header h1 {
-                font-size: 26px;
+                font-size: 20px;
             }
             
             .table-container {
-                padding: 15px;
+                padding: 12px;
             }
             
             .taxonomy-table {
@@ -210,99 +210,99 @@
             }
             
             .domain-card {
-                margin-bottom: 12px;
+                margin-bottom: 8px;
             }
             
             .domain-header {
-                padding: 14px 16px;
-                font-size: 15px;
-            }
-            
-            .domain-number {
-                width: 28px;
-                height: 28px;
-                font-size: 14px;
-            }
-            
-            .subdomain-item {
-                padding: 14px 16px;
-            }
-            
-            .subdomain-number {
-                width: 24px;
-                height: 24px;
-                font-size: 10px;
-            }
-            
-            .subdomain-title {
+                padding: 10px 15px;
                 font-size: 13px;
             }
             
+            .domain-number {
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
+            }
+            
+            .subdomain-item {
+                padding: 10px 15px;
+            }
+            
+            .subdomain-number {
+                width: 18px;
+                height: 18px;
+                font-size: 8px;
+            }
+            
+            .subdomain-title {
+                font-size: 11px;
+            }
+            
             .subdomain-description {
-                font-size: 12px;
-                margin-left: 36px;
+                font-size: 10px;
+                margin-left: 28px;
             }
         }
         
         @media (max-width: 480px) {
             body {
-                padding: 10px;
+                padding: 8px;
             }
             
             .taxonomy-header {
-                padding: 25px 15px;
+                padding: 15px 12px;
             }
             
             .taxonomy-header h1 {
-                font-size: 22px;
+                font-size: 18px;
             }
             
             .table-container {
-                padding: 12px;
+                padding: 10px;
             }
             
             .taxonomy-table {
                 min-width: 500px;
-                border-spacing: 8px;
+                border-spacing: 6px;
             }
             
             .domain-card {
-                margin-bottom: 8px;
+                margin-bottom: 6px;
             }
             
             .domain-header {
-                padding: 12px 14px;
-                font-size: 14px;
+                padding: 8px 12px;
+                font-size: 12px;
             }
             
             .domain-number {
-                width: 24px;
-                height: 24px;
-                font-size: 12px;
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
             }
             
             .subdomain-item {
-                padding: 12px 14px;
+                padding: 8px 12px;
             }
             
             .subdomain-header {
-                gap: 10px;
+                gap: 8px;
             }
             
             .subdomain-number {
-                width: 20px;
-                height: 20px;
-                font-size: 9px;
+                width: 16px;
+                height: 16px;
+                font-size: 7px;
             }
             
             .subdomain-title {
-                font-size: 12px;
+                font-size: 10px;
             }
             
             .subdomain-description {
-                font-size: 11px;
-                line-height: 1.4;
-                margin-left: 30px;
+                font-size: 9px;
+                line-height: 1.3;
+                margin-left: 24px;
             }
         }
         
