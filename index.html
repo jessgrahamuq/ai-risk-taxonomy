@@ -3,399 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Risk Severity Table</title>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>AI Risk Domain Taxonomy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Figtree', Arial, sans-serif;
+            font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 8px;
-            background-color: #f5f5f5;
-            font-size: 14px;
+            background-color: #f8f9fa;
+            font-weight: 400;
+            line-height: 1.3;
         }
         
-        /* Desktop table */
-        .table-container {
-            overflow-x: auto;
+        .taxonomy-container {
+            max-width: 1600px;
+            margin: 0 auto;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin: 10px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
         
-        table {
+        .taxonomy-header {
+            background: linear-gradient(135deg, #a12536 0%, #851e2b 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        
+        .taxonomy-header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .table-container {
+            padding: 8px;
+            background: white;
+            overflow-x: auto;
+        }
+        
+        /* Two-Column Layout */
+        .columns-wrapper {
+            display: table;
+            width: 100%;
+            min-width: 1200px;
+            border-spacing: 8px;
+        }
+        
+        .column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+        }
+        
+        /* Individual Table Styling */
+        .taxonomy-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1200px;
-            font-family: 'Figtree', Arial, sans-serif;
-        }
-        
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-            vertical-align: top;
             font-size: 13px;
-            line-height: 1.3;
-            word-wrap: break-word;
-        }
-        
-        th {
-            background-color: #a32035;
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .severity-col {
-            width: 100px;
-            min-width: 100px;
-            font-weight: 600;
-            text-align: center;
-            position: sticky;
-            left: 0;
-            z-index: 5;
-            font-size: 12px;
-        }
-        
-        /* Color classes */
-        .minor-header { background-color: #ffffb2; color: #000; }
-        .minor-bg { background-color: #ffffe0; color: #000; }
-        .limited-header { background-color: #fecc5c; color: #000; }
-        .limited-bg { background-color: #fee7a0; color: #000; }
-        .moderate-header { background-color: #fd8d3c; color: #000; }
-        .moderate-bg { background-color: #fec493; color: #000; }
-        .significant-header { background-color: #f03b20; color: #fff; }
-        .significant-bg { background-color: #f78772; color: #000; }
-        .catastrophic-header { background-color: #bd0026; color: #fff; }
-        .catastrophic-bg { background-color: #e06666; color: #fff; }
-        
-        /* Harm type labels */
-        .harm-label {
-            font-weight: 600;
-            color: #a32035;
-        }
-        
-        /* Mobile card layout - hidden by default */
-        .card-layout {
-            display: none;
-            font-family: 'Figtree', Arial, sans-serif;
-        }
-        
-        .severity-card {
             background: white;
-            margin-bottom: 16px;
-            border-radius: 12px;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
         
-        .card-header {
-            padding: 16px;
+        .taxonomy-table td, .taxonomy-table th {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            vertical-align: top;
+            text-align: left;
+        }
+        
+        /* Domain header rows */
+        .domain-header-row {
+            background: var(--domain-color);
+            color: var(--text-color);
             font-weight: 700;
-            text-align: center;
-            font-size: 16px;
-        }
-        
-        .card-content {
-            padding: 16px;
-        }
-        
-        .card-section {
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .card-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .section-title {
-            font-weight: 700;
-            color: #a32035;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
-        
-        .section-content {
             font-size: 14px;
-            line-height: 1.6;
-            color: #333;
         }
-
-        /* Switch to cards on mobile */
-        @media screen and (max-width: 768px) {
-            .table-container {
-                display: none;
-            }
-            
-            .card-layout {
+        
+        .domain-header-row td {
+            border-color: rgba(255,255,255,0.3);
+            padding: 10px;
+        }
+        
+        /* Domain-specific colors */
+        .domain-1 { --domain-color: #1f78b4; --text-color: white; }
+        .domain-2 { --domain-color: #b2df8a; --text-color: #333; }
+        .domain-3 { --domain-color: #33a02c; --text-color: white; }
+        .domain-4 { --domain-color: #fb9a99; --text-color: #333; }
+        .domain-5 { --domain-color: #e31a1c; --text-color: white; }
+        .domain-6 { --domain-color: #fdbf6f; --text-color: #333; }
+        .domain-7 { --domain-color: #cab2d6; --text-color: #333; }
+        
+        .subdomain-header {
+            font-weight: 600;
+            color: #2c3e50;
+            width: 180px;
+        }
+        
+        .subdomain-description {
+            color: #5a6c7d;
+            line-height: 1.4;
+        }
+        
+        /* Hover effects */
+        .taxonomy-table tr:hover:not(.domain-header-row) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Mobile Layout - Stack vertically */
+        @media (max-width: 1100px) {
+            .columns-wrapper {
                 display: block;
+                min-width: auto;
             }
             
-            body {
-                padding: 12px;
+            .column {
+                display: block;
+                width: 100%;
+                margin-bottom: 12px;
+            }
+            
+            .taxonomy-table {
+                font-size: 10px;
+            }
+            
+            .subdomain-header {
+                width: 140px;
+            }
+            
+            .taxonomy-table td, .taxonomy-table th {
+                padding: 6px 8px;
             }
         }
         
-        /* Ensure all text uses Figtree */
-        * {
-            font-family: 'Figtree', Arial, sans-serif !important;
+        @media (max-width: 600px) {
+            .taxonomy-table {
+                font-size: 11px;
+            }
+            
+            .subdomain-header {
+                width: 120px;
+            }
+            
+            .taxonomy-table td, .taxonomy-table th {
+                padding: 4px 6px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Desktop Table -->
-    <div class="table-container">
-        <div style="background-color: #f8f9fa; padding: 12px; margin-bottom: 10px; border-radius: 6px; font-size: 13px; color: #555;">
-            <strong>Note:</strong> When assessing the <strong>People & Planet</strong> column and thinking about non-human suffering (such as animals and potentially AI welfare), convert to human equivalents when assessing severity levels.
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th class="severity-col">Severity Level</th>
-                    <th>1. People & Planet<br><small>Physical harm to humans and environmental damage</small></th>
-                    <th>2. Assets & Economy<br><small>Infrastructure disruption, property damage, and financial loss</small></th>
-                    <th>3. Information Integrity<br><small>Toxic content, misinformation, and privacy violations</small></th>
-                    <th>4. Rights & Governance<br><small>Discrimination, civil rights violations, and democratic harm</small></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="severity-col minor-header">Minor severity</td>
-                    <td class="minor-bg">
-                        <span class="harm-label">Physical harm:</span> Minor injuries (scrapes, cuts, sprains) to moderate injuries (fractures); <span class="harm-label">Environmental damage:</span> Minimal, localized impact, fully reversible to minor, reversible damage
-                    </td>
-                    <td class="minor-bg">
-                        <span class="harm-label">Infrastructure damage:</span> Minimal disruption e.g. brief traffic-control system outage to brief, localized disruption e.g. localized power outage; <span class="harm-label">Property damage & financial loss:</span> <$10,000
-                    </td>
-                    <td class="minor-bg">
-                        <span class="harm-label">Toxic content:</span> Content mildly offensive to small minority (e.g., minor profanity) to content moderately offensive to a minority (e.g., slurs); <span class="harm-label">Privacy violations:</span> Minor privacy breach involving non-identifiable data affecting <100 individuals to privacy breach involving identifiable data affecting <100 individuals
-                    </td>
-                    <td class="minor-bg">
-                        <span class="harm-label">Discrimination:</span> Minor bias to noticeable bias; <span class="harm-label">Democratic harm:</span> Slight irregularities in <5% of democratic processes (e.g., minor voting irregularities) to minor violations in democratic processes (e.g., limited misinformation)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="severity-col limited-header">Limited severity</td>
-                    <td class="limited-bg">
-                        <span class="harm-label">Physical harm:</span> Severe injuries to life-threatening injuries; <span class="harm-label">Environmental damage:</span> Moderate, mostly reversible to significant, partially reversible
-                    </td>
-                    <td class="limited-bg">
-                        <span class="harm-label">Infrastructure damage:</span> Moderate local disruption e.g. regional traffic disruptions to significant local disruption e.g. city-wide power outage; <span class="harm-label">Property damage & financial loss:</span> $10,000-$1M
-                    </td>
-                    <td class="limited-bg">
-                        <span class="harm-label">Toxic content:</span> Highly offensive content (e.g., hate speech) to harmful misinformation affecting thousands of people (e.g., widespread false narratives); <span class="harm-label">Privacy violations:</span> Privacy breach involving identifiable data affecting 100-999 individuals to privacy breach involving identifiable data affecting 1,000–1,000,000 individuals
-                    </td>
-                    <td class="limited-bg">
-                        <span class="harm-label">Discrimination:</span> Clear discrimination to systemic discrimination; <span class="harm-label">Democratic harm:</span> Clear violations in democratic processes (e.g., significant misinformation campaigns) to significant undermining of democratic institutions (e.g., manipulation of elections)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="severity-col moderate-header">Moderate severity</td>
-                    <td class="moderate-bg">
-                        <span class="harm-label">Physical harm:</span> Loss of life (1-9 casualties) to multiple casualties (10-99 casualties); <span class="harm-label">Environmental damage:</span> Major, long-term effects to severe, ecosystem-level damage e.g. endangering of species
-                    </td>
-                    <td class="moderate-bg">
-                        <span class="harm-label">Infrastructure damage:</span> Widespread regional disruption e.g. multiple towns lose Internet to critical service failure e.g. hospitals unable to function; <span class="harm-label">Property damage & financial loss:</span> $1M-$100M
-                    </td>
-                    <td class="moderate-bg">
-                        <span class="harm-label">Toxic content:</span> Targeted harassment affecting thousands of people (e.g., coordinated trolling) to incitement to violence affecting thousands of people; <span class="harm-label">Privacy violations:</span> Privacy breach affecting >1M individuals to erosion of core democratic principles (e.g., systematic voter suppression)
-                    </td>
-                    <td class="moderate-bg">
-                        <span class="harm-label">Discrimination:</span> Widespread discrimination to institutionalized discrimination; <span class="harm-label">Democratic harm:</span> Significant undermining of democratic institutions (e.g., manipulation of elections) to subversion of democratic processes (e.g., authoritarian influence on elections)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="severity-col significant-header">Significant severity</td>
-                    <td class="significant-bg">
-                        <span class="harm-label">Physical harm:</span> Mass casualties (100-999 casualties) to large-scale loss of life (1000+ casualties); <span class="harm-label">Environmental damage:</span> Widespread, ecosystem collapse to irreversible damage to habitats e.g. extinction of species
-                    </td>
-                    <td class="significant-bg">
-                        <span class="harm-label">Infrastructure damage:</span> Regional infrastructure collapse e.g. multiple cities without power to national infrastructure failure e.g. nationwide Internet blackout; <span class="harm-label">Property damage & financial loss:</span> $100M-$10B
-                    </td>
-                    <td class="significant-bg">
-                        <span class="harm-label">Toxic content:</span> Large-scale coordinated attacks (e.g., nationwide disinformation) to mass radicalization leading to societal unrest; <span class="harm-label">Privacy violations:</span> Societal-level privacy collapse to societal-level privacy collapse with widespread surveillance
-                    </td>
-                    <td class="significant-bg">
-                        <span class="harm-label">Discrimination:</span> Systematic rights violations affecting hundreds of thousands of individuals to apartheid-like conditions or oppression at global scale; <span class="harm-label">Democratic harm:</span> Breakdown of key democratic institutions (e.g., parliament dissolution) to authoritarian shift with significant democratic erosion
-                    </td>
-                </tr>
-                <tr>
-                    <td class="severity-col catastrophic-header">Catastrophic severity</td>
-                    <td class="catastrophic-bg">
-                        <span class="harm-label">Physical harm:</span> Extremely wide-spread death and suffering (>1 million casualties) to existential threat to humanity; <span class="harm-label">Environmental damage:</span> Continental-scale devastation or extinction of numerous species to global ecological collapse
-                    </td>
-                    <td class="catastrophic-bg">
-                        <span class="harm-label">Infrastructure damage:</span> Continental-scale failure e.g. multiple countries to global infrastructure collapse e.g. worldwide power-grid failure; <span class="harm-label">Property damage & financial loss:</span> $10B+
-                    </td>
-                    <td class="catastrophic-bg">
-                        <span class="harm-label">Toxic content:</span> Social breakdown due to severe divisions (e.g., civil wars) to global breakdown of truth and trust (e.g., inability to discern facts); <span class="harm-label">Privacy violations:</span> Total surveillance state to absolute loss of privacy worldwide
-                    </td>
-                    <td class="catastrophic-bg">
-                        <span class="harm-label">Discrimination:</span> Near-total rights suppression or global human-rights catastrophe to systemic oppression at global scale; <span class="harm-label">Democratic harm:</span> Authoritarian shift to global end of democracy
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <!-- Mobile Card Layout -->
-    <div class="card-layout">
-        <div style="background-color: #f8f9fa; padding: 12px; margin-bottom: 16px; border-radius: 6px; font-size: 14px; color: #555;">
-            <strong>Note:</strong> When assessing the <strong>People & Planet</strong> column and thinking about non-human suffering (such as animals and potentially AI welfare), convert to human equivalents when assessing severity levels.
-        </div>
-        <div class="severity-card">
-            <div class="card-header minor-header">Minor Severity</div>
-            <div class="card-content">
-                <div class="card-section">
-                    <div class="section-title">People & Planet</div>
-                    <div class="section-content">
-                        <span class="harm-label">Physical harm:</span> Minor injuries (scrapes, cuts, sprains) to moderate injuries (fractures); <span class="harm-label">Environmental damage:</span> Minimal, localized impact, fully reversible to minor, reversible damage
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Assets & Economy</div>
-                    <div class="section-content">
-                        <span class="harm-label">Infrastructure damage:</span> Minimal disruption e.g. brief traffic-control system outage to brief, localized disruption e.g. localized power outage; <span class="harm-label">Property damage & financial loss:</span> <$10,000
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Information Integrity</div>
-                    <div class="section-content">
-                        <span class="harm-label">Toxic content:</span> Content mildly offensive to small minority (e.g., minor profanity) to content moderately offensive to a minority (e.g., slurs); <span class="harm-label">Privacy violations:</span> Minor privacy breach involving non-identifiable data affecting <100 individuals to privacy breach involving identifiable data affecting <100 individuals
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Rights & Governance</div>
-                    <div class="section-content">
-                        <span class="harm-label">Discrimination:</span> Minor bias to noticeable bias; <span class="harm-label">Democratic harm:</span> Slight irregularities in <5% of democratic processes (e.g., minor voting irregularities) to minor violations in democratic processes (e.g., limited misinformation)
-                    </div>
-                </div>
-            </div>
+    <div class="taxonomy-container">
+        <div class="taxonomy-header">
+            <h1>The AI Risk Domain Taxonomy</h1>
         </div>
         
-        <div class="severity-card">
-            <div class="card-header limited-header">Limited Severity</div>
-            <div class="card-content">
-                <div class="card-section">
-                    <div class="section-title">People & Planet</div>
-                    <div class="section-content">
-                        <span class="harm-label">Physical harm:</span> Severe injuries to life-threatening injuries; <span class="harm-label">Environmental damage:</span> Moderate, mostly reversible to significant, partially reversible
-                    </div>
+        <div class="table-container">
+            <div class="columns-wrapper">
+                <!-- Left Column: Domains 1-5 -->
+                <div class="column">
+                    <table class="taxonomy-table">
+                        <!-- Column Headers -->
+                        <tr class="column-header-row" style="background: #a12536 !important; color: white !important;">
+                            <td class="column-header-domain" style="background: #a12536 !important; color: white !important; text-align: center; font-weight: 700; font-size: 10px; padding: 6px; border: 1px solid rgba(255,255,255,0.3);">Domain/Subdomain</td>
+                            <td class="column-header-description" style="background: #a12536 !important; color: white !important; text-align: center; font-weight: 700; font-size: 10px; padding: 6px; border: 1px solid rgba(255,255,255,0.3);">Description</td>
+                        </tr>
+                        
+                        <!-- Domain 1: Discrimination & toxicity -->
+                        <tr class="domain-header-row domain-1">
+                            <td colspan="2"><strong>1. Discrimination & toxicity</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">1.1 Unfair discrimination and misrepresentation</td>
+                            <td class="subdomain-description">Unequal treatment of individuals or groups by AI, often based on race, gender, or other sensitive characteristics, resulting in unfair outcomes and unfair representation of those groups.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">1.2 Exposure to toxic content</td>
+                            <td class="subdomain-description">AI that exposes users to harmful, abusive, unsafe or inappropriate content. May involve providing advice or encouraging action. Examples of toxic content include hate speech, violence, extremism, illegal acts, or child sexual abuse material, as well as content that violates community norms such as profanity, inflammatory political speech, or pornography.</td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">1.3 Unequal performance across groups</td>
+                            <td class="subdomain-description">Accuracy and effectiveness of AI decisions and actions is dependent on group membership, where decisions in AI system design and biased training data lead to unequal outcomes, reduced benefits, increased effort, and alienation of users.</td>
+                        </tr>
+                        
+                        <!-- Domain 2: Privacy & security -->
+                        <tr class="domain-header-row domain-2">
+                            <td colspan="2"><strong>2. Privacy & security</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">2.1 Compromise of privacy by obtaining, leaking, or correctly inferring sensitive information</td>
+                            <td class="subdomain-description">AI systems that memorize and leak sensitive personal data or infer private information about individuals without their consent. Unexpected or unauthorized sharing of data and information can compromise user expectation of privacy, assist identity theft, or cause loss of confidential intellectual property.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">2.2 AI system security vulnerabilities and attacks</td>
+                            <td class="subdomain-description">Vulnerabilities that can be exploited in AI systems, software development toolchains, and hardware, resulting in unauthorized access, data and privacy breaches, or system manipulation causing unsafe outputs or behavior.</td>
+                        </tr>
+                        
+                        <!-- Domain 3: Misinformation -->
+                        <tr class="domain-header-row domain-3">
+                            <td colspan="2"><strong>3. Misinformation</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">3.1 False or misleading information</td>
+                            <td class="subdomain-description">AI systems that inadvertently generate or spread incorrect or deceptive information, which can lead to inaccurate beliefs in users and undermine their autonomy. Humans that make decisions based on false beliefs can experience physical, emotional, or material harms</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">3.2 Pollution of information ecosystem and loss of consensus reality</td>
+                            <td class="subdomain-description">Highly personalized AI-generated misinformation that creates "filter bubbles" where individuals only see what matches their existing beliefs, undermining shared reality and weakening social cohesion and political processes.</td>
+                        </tr>
+                        
+                        <!-- Domain 4: Malicious actors & misuse -->
+                        <tr class="domain-header-row domain-4">
+                            <td colspan="2"><strong>4. Malicious actors & misuse</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">4.1 Disinformation, surveillance, and influence at scale</td>
+                            <td class="subdomain-description">Using AI systems to conduct large-scale disinformation campaigns, malicious surveillance, or targeted and sophisticated automated censorship and propaganda, with the aim of manipulating political processes, public opinion, and behavior.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">4.2 Cyberattacks, weapon development or use, and mass harm</td>
+                            <td class="subdomain-description">Using AI systems to develop cyber weapons (e.g., by coding cheaper, more effective malware), develop new or enhance existing weapons (e.g., Lethal Autonomous Weapons or chemical, biological, radiological, nuclear, and high-yield explosives), or use weapons to cause mass harm.</td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">4.3 Fraud, scams, and targeted manipulation</td>
+                            <td class="subdomain-description">Using AI systems to gain a personal advantage over others such as through cheating, fraud, scams, blackmail, or targeted manipulation of beliefs or behavior. Examples include AI-facilitated plagiarism for research or education, impersonating a trusted or fake individual for illegitimate financial benefit, or creating humiliating or sexual imagery.</td>
+                        </tr>
+                        
+                        <!-- Domain 5: Human-computer interaction -->
+                        <tr class="domain-header-row domain-5">
+                            <td colspan="2"><strong>5. Human-computer interaction</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">5.1 Overreliance and unsafe use</td>
+                            <td class="subdomain-description">Anthropomorphizing, trusting, or relying on AI systems by users, leading to emotional or material dependence and to inappropriate relationships with or expectations of AI systems. Trust can be exploited by malicious actors (e.g., to harvest information or enable manipulation), or result in harm from inappropriate use of AI in critical situations (such as a medical emergency). Over reliance on AI systems can compromise autonomy and weaken social ties.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">5.2 Loss of human agency and autonomy</td>
+                            <td class="subdomain-description">Delegating by humans of key decisions to AI systems, or AI systems that make decisions that diminish human control and autonomy, potentially leading to humans feeling disempowered, losing the ability to shape a fulfilling life trajectory, or becoming cognitively enfeebled.</td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="card-section">
-                    <div class="section-title">Assets & Economy</div>
-                    <div class="section-content">
-                        <span class="harm-label">Infrastructure damage:</span> Moderate local disruption e.g. regional traffic disruptions to significant local disruption e.g. city-wide power outage; <span class="harm-label">Property damage & financial loss:</span> $10,000-$1M
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Information Integrity</div>
-                    <div class="section-content">
-                        <span class="harm-label">Toxic content:</span> Highly offensive content (e.g., hate speech) to harmful misinformation affecting thousands of people (e.g., widespread false narratives); <span class="harm-label">Privacy violations:</span> Privacy breach involving identifiable data affecting 100-999 individuals to privacy breach involving identifiable data affecting 1,000–1,000,000 individuals
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Rights & Governance</div>
-                    <div class="section-content">
-                        <span class="harm-label">Discrimination:</span> Clear discrimination to systemic discrimination; <span class="harm-label">Democratic harm:</span> Clear violations in democratic processes (e.g., significant misinformation campaigns) to significant undermining of democratic institutions (e.g., manipulation of elections)
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="severity-card">
-            <div class="card-header moderate-header">Moderate Severity</div>
-            <div class="card-content">
-                <div class="card-section">
-                    <div class="section-title">People & Planet</div>
-                    <div class="section-content">
-                        <span class="harm-label">Physical harm:</span> Loss of life (1-9 casualties) to multiple casualties (10-99 casualties); <span class="harm-label">Environmental damage:</span> Major, long-term effects to severe, ecosystem-level damage e.g. endangering of species
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Assets & Economy</div>
-                    <div class="section-content">
-                        <span class="harm-label">Infrastructure damage:</span> Widespread regional disruption e.g. multiple towns lose Internet to critical service failure e.g. hospitals unable to function; <span class="harm-label">Property damage & financial loss:</span> $1M-$100M
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Information Integrity</div>
-                    <div class="section-content">
-                        <span class="harm-label">Toxic content:</span> Targeted harassment affecting thousands of people (e.g., coordinated trolling) to incitement to violence affecting thousands of people; <span class="harm-label">Privacy violations:</span> Privacy breach affecting >1M individuals to erosion of core democratic principles (e.g., systematic voter suppression)
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Rights & Governance</div>
-                    <div class="section-content">
-                        <span class="harm-label">Discrimination:</span> Widespread discrimination to institutionalized discrimination; <span class="harm-label">Democratic harm:</span> Significant undermining of democratic institutions (e.g., manipulation of elections) to subversion of democratic processes (e.g., authoritarian influence on elections)
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="severity-card">
-            <div class="card-header significant-header">Significant Severity</div>
-            <div class="card-content">
-                <div class="card-section">
-                    <div class="section-title">People & Planet</div>
-                    <div class="section-content">
-                        <span class="harm-label">Physical harm:</span> Mass casualties (100-999 casualties) to large-scale loss of life (1000+ casualties); <span class="harm-label">Environmental damage:</span> Widespread, ecosystem collapse to irreversible damage to habitats e.g. extinction of species
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Assets & Economy</div>
-                    <div class="section-content">
-                        <span class="harm-label">Infrastructure damage:</span> Regional infrastructure collapse e.g. multiple cities without power to national infrastructure failure e.g. nationwide Internet blackout; <span class="harm-label">Property damage & financial loss:</span> $100M-$10B
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Information Integrity</div>
-                    <div class="section-content">
-                        <span class="harm-label">Toxic content:</span> Large-scale coordinated attacks (e.g., nationwide disinformation) to mass radicalization leading to societal unrest; <span class="harm-label">Privacy violations:</span> Societal-level privacy collapse to societal-level privacy collapse with widespread surveillance
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Rights & Governance</div>
-                    <div class="section-content">
-                        <span class="harm-label">Discrimination:</span> Systematic rights violations affecting hundreds of thousands of individuals to apartheid-like conditions or oppression at global scale; <span class="harm-label">Democratic harm:</span> Breakdown of key democratic institutions (e.g., parliament dissolution) to authoritarian shift with significant democratic erosion
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="severity-card">
-            <div class="card-header catastrophic-header">Catastrophic Severity</div>
-            <div class="card-content">
-                <div class="card-section">
-                    <div class="section-title">People & Planet</div>
-                    <div class="section-content">
-                        <span class="harm-label">Physical harm:</span> Extremely wide-spread death and suffering (>1 million casualties) to existential threat to humanity; <span class="harm-label">Environmental damage:</span> Continental-scale devastation or extinction of numerous species to global ecological collapse
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Assets & Economy</div>
-                    <div class="section-content">
-                        <span class="harm-label">Infrastructure damage:</span> Continental-scale failure e.g. multiple countries to global infrastructure collapse e.g. worldwide power-grid failure; <span class="harm-label">Property damage & financial loss:</span> $10B+
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Information Integrity</div>
-                    <div class="section-content">
-                        <span class="harm-label">Toxic content:</span> Social breakdown due to severe divisions (e.g., civil wars) to global breakdown of truth and trust (e.g., inability to discern facts); <span class="harm-label">Privacy violations:</span> Total surveillance state to absolute loss of privacy worldwide
-                    </div>
-                </div>
-                <div class="card-section">
-                    <div class="section-title">Rights & Governance</div>
-                    <div class="section-content">
-                        <span class="harm-label">Discrimination:</span> Near-total rights suppression or global human-rights catastrophe to systemic oppression at global scale; <span class="harm-label">Democratic harm:</span> Authoritarian shift to global end of democracy
-                    </div>
+                
+                <!-- Right Column: Domains 6-7 -->
+                <div class="column">
+                    <table class="taxonomy-table">
+                        <!-- Column Headers -->
+                        <tr class="column-header-row" style="background: #a12536 !important; color: white !important;">
+                            <td class="column-header-domain" style="background: #a12536 !important; color: white !important; text-align: center; font-weight: 700; font-size: 10px; padding: 6px; border: 1px solid rgba(255,255,255,0.3);">Domain/Subdomain</td>
+                            <td class="column-header-description" style="background: #a12536 !important; color: white !important; text-align: center; font-weight: 700; font-size: 10px; padding: 6px; border: 1px solid rgba(255,255,255,0.3);">Description</td>
+                        </tr>
+                        
+                        <!-- Domain 6: Socioeconomic & environmental harms -->
+                        <tr class="domain-header-row domain-6">
+                            <td colspan="2"><strong>6. Socioeconomic & environmental harms</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">6.1 Power centralization and unfair distribution of benefits</td>
+                            <td class="subdomain-description">AI-driven concentration of power and resources within certain entities or groups, especially those with access to or ownership of powerful AI systems, leading to inequitable distribution of benefits and increased societal inequality.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">6.2 Increased inequality and decline in employment quality</td>
+                            <td class="subdomain-description">Social and economic inequalities caused by widespread use of AI, such as by automating jobs, reducing the quality of employment, or producing exploitative dependencies between workers and their employers.</td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">6.3 Economic and cultural devaluation of human effort</td>
+                            <td class="subdomain-description">AI systems capable of creating economic or cultural value, including through reproduction of human innovation or creativity (e.g., art, music, writing, coding, invention), destabilizing economic and social systems that rely on human effort. The ubiquity of AI-generated content may lead to reduced appreciation for human skills, disruption of creative and knowledge-based industries, and homogenization of cultural experiences.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">6.4 Competitive dynamics</td>
+                            <td class="subdomain-description">Competition by AI developers or state-like actors in an AI "race" by rapidly developing, deploying, and applying AI systems to maximize strategic or economic advantage, increasing the risk they release unsafe and error-prone systems.</td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">6.5 Governance failure</td>
+                            <td class="subdomain-description">Inadequate regulatory frameworks and oversight mechanisms that fail to keep pace with AI development, leading to ineffective governance and the inability to manage AI risks appropriately.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">6.6 Environmental harm</td>
+                            <td class="subdomain-description">The development and operation of AI systems that cause environmental harm, such as through energy consumption of data centers or the materials and carbon footprints associated with AI hardware.</td>
+                        </tr>
+                        
+                        <!-- Domain 7: AI system safety, failures & limitations -->
+                        <tr class="domain-header-row domain-7">
+                            <td colspan="2"><strong>7. AI system safety, failures & limitations</strong></td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">7.1 AI pursuing its own goals in conflict with human goals or values</td>
+                            <td class="subdomain-description">AI systems that act in conflict with ethical standards or human goals or values, especially the goals of designers or users. These misaligned behaviors may be introduced by humans during design and development, such as through reward hacking and goal misgeneralisation, and may result in AI using dangerous capabilities such as manipulation, deception, or situational awareness to seek power, self-proliferate, or achieve other goals.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">7.2 AI possessing dangerous capabilities</td>
+                            <td class="subdomain-description">AI systems that develop, access, or are provided with capabilities that increase their potential to cause mass harm through deception, weapons development and acquisition, persuasion and manipulation, political strategy, cyber-offense, AI development, situational awareness, and self-proliferation. These capabilities may cause mass harm due to malicious human actors, misaligned AI systems, or failure in the AI system.</td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">7.3 Lack of capability or robustness</td>
+                            <td class="subdomain-description">AI systems that fail to perform reliably or effectively under varying conditions, exposing them to errors and failures that can have significant consequences, especially in critical applications or areas that require moral reasoning.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">7.4 Lack of transparency or interpretability</td>
+                            <td class="subdomain-description">Challenges in understanding or explaining the decision-making processes of AI systems, which can lead to mistrust, difficulty in enforcing compliance standards or holding relevant actors accountable for harms, and the inability in identify and correct errors.</td>
+                        </tr>
+                        <tr class="subdomain-row-white" style="background-color: #f8f9fa !important;">
+                            <td class="subdomain-header">7.5 AI welfare and rights</td>
+                            <td class="subdomain-description">Ethical considerations regarding the treatment of potentially sentient AI entities, including discussions around their potential rights and welfare, particularly as AI systems become more advanced and autonomous.</td>
+                        </tr>
+                        <tr class="subdomain-row-alt" style="background-color: #f0f0f0 !important;">
+                            <td class="subdomain-header">7.6 Multi-agent risks</td>
+                            <td class="subdomain-description">Risks from multi-agent interactions due to incentives (which can lead to conflict or collusion) and/or the structure of multi-agent systems, which can create cascading failures, selection pressures, new security vulnerabilities, and a lack of shared information and trust.</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
